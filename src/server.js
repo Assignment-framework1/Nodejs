@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import userRouter from './routers/user'
-
+import categoryRouter from './routers/category'
 const app = express()
 const port = 8080
 
@@ -18,7 +18,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/assignment2")
 
 // Router
 app.use(cors());
-app.use('/users', userRouter)
+app.use('/users', userRouter);
+app.use('/category', categoryRouter);
 
 app.listen(port, () => {
     console.log(`Server đang chạy trên port ${port}`)
