@@ -1,16 +1,16 @@
-import Category from "../models/category"
+import Size from "../models/size";
 import Joi from "joi";
 
-export const categorySchema = Joi.object({
+export const sizeSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string()
 })
 
 export const getAll = async (req, res) => {
     try {
-        const data = await Category.find()
+        const data = await Size.find()
         res.send({
-            message: "Get categories successfully",
+            message: "Get sizes successfully",
             data: data
         })
     } catch (error) {
@@ -23,9 +23,9 @@ export const getAll = async (req, res) => {
 export const getById = async (req, res) => {
     try {
         const id = req.params.id
-        const data = await Category.findById(id)
+        const data = await Size.findById(id)
         res.send({
-            message: "Get category successfully",
+            message: "Get size successfully",
             data: data
         })
     } catch (error) {
@@ -38,15 +38,15 @@ export const getById = async (req, res) => {
 export const create = async (req, res) => {
     try {
         const body = req.body
-        const { error } = categorySchema.validate(body)
+        const { error } = sizeSchema.validate(body)
         if (error) {
             res.status(400).send({
                 message: error.message
             })
         } else {
-            const data = await Category.create(body)
+            const data = await Size.create(body)
             res.send({
-                message: "Create category successfully",
+                message: "Create size successfully",
                 data: data
             })
         }
@@ -62,21 +62,21 @@ export const update = async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body
-        const { error } = categorySchema.validate(body)
+        const { error } = sizeSchema.validate(body)
         if (error) {
             res.status(400).send({
                 message: error.message
             })
         } else {
-            const data = await Category.findByIdAndUpdate(id, body)
+            const data = await Size.findByIdAndUpdate(id, body)
             if (data) {
                 res.send({
-                    message: "Update category successfully",
+                    message: "Update size successfully",
                     data: data
                 })
             } else {
                 res.status(400).send({
-                    message: "Category is not existed",
+                    message: "Size is not existed",
                     data: data
                 })
             }
@@ -93,14 +93,14 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const id = req.params.id
-        const data = await Category.findByIdAndRemove(id)
+        const data = await Size.findByIdAndRemove(id)
         if (data) {
             res.send({
-                message: "Detele category successfully"
+                message: "Detele size successfully"
             })
         } else {
             res.status(400).send({
-                message: "Category is not existed"
+                message: "Size is not existed"
             })
         }
     } catch (error) {

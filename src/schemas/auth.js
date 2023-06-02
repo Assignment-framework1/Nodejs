@@ -1,7 +1,7 @@
 import joi from "joi";
 
 export const signupSchema = joi.object({
-    name: joi.string().required().messages({
+    username: joi.string().required().messages({
         "string.empty": 'Trường "tên" không được để trống',
         "any.required": 'Trường "tên" là bắt buộc',
     }),
@@ -9,6 +9,10 @@ export const signupSchema = joi.object({
         "string.empty": 'Trường "email" không được để trống',
         "string.email": 'Trường "email" không đúng định dạng',
         "any.required": 'Trường "email" là bắt buộc',
+    }),
+    phone: joi.number().required().messages({
+        "number.base": 'Trường "phone" không được để trống',
+        "any.required": 'Trường "phone" là bắt buộc',
     }),
     password: joi.string().min(6).required().messages({
         "string.empty": 'Trường "mật khẩu" không được để trống',
