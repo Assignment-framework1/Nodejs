@@ -2,21 +2,14 @@ import Joi from "joi"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import Users from "../models/user"
+import { signinSchema, signupSchema } from "../schemas/auth"
 
 const salt = bcrypt.genSaltSync(10)
-
-const userSchema = Joi.object({
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
-    confirmPassword: Joi.string().required().valid(Joi.ref('password'))
-})
 
 export const signup = async (req, res) => {
     try {
         const body = req.body
-        const { error } = userSchema.validate(body)
+        const { error } = signupSchema.validate(body)
         if (error) {
             res.status(400).send({
                 message: error.details[0].message
@@ -36,15 +29,10 @@ export const signup = async (req, res) => {
     }
 }
 
-const userSigninSchema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).required()
-})
-
 export const signin = async (req, res) => {
     try {
         const body = req.body
-        const { error } = userSigninSchema.validate(body)
+        const { error } = signinSchema.validate(body)
 
         // Validate
         if (error) {
@@ -65,7 +53,7 @@ export const signin = async (req, res) => {
                 message: "Tên đăng nhập hoặc mật khẩu sai"
             })
         }
-        const accessToken = jwt.sign({ _id: user.id }, "assignment2", { expiresIn: "5m" })
+        const accessToken = jwt.sign({ _id: user.id }, "asm2_fw1", { expiresIn: "5m" })
         res.send({
             message: `Đăng nhập thành công`,
             data: {

@@ -1,16 +1,26 @@
-import Category from "../models/category"
+import Product from "../models/product";
 import Joi from "joi";
 
-export const categorySchema = Joi.object({
+const size_id = Joi.string().required()
+
+const productSchema = Joi.object({
     name: Joi.string().required(),
-    description: Joi.string()
+    price: Joi.number().required(),
+    origin_price: Joi.number(),
+    image: Joi.string().required(),
+    description: Joi.string().required(),
+    size: Joi.array().items(size_id),
+    category_id: Joi.string().required(),
+    brand: Joi.string().required(),
+    quantity: Joi.number().required(),
+    status: Joi.string()
 })
 
 export const getAll = async (req, res) => {
     try {
-        const data = await Category.find()
+        const data = await Product.find()
         res.send({
-            message: "Get categories successfully",
+            message: "Get products successfully",
             data: data
         })
     } catch (error) {
@@ -23,9 +33,9 @@ export const getAll = async (req, res) => {
 export const getById = async (req, res) => {
     try {
         const id = req.params.id
-        const data = await Category.findById(id)
+        const data = await Product.findById(id)
         res.send({
-            message: "Get category successfully",
+            message: "Get product successfully",
             data: data
         })
     } catch (error) {
@@ -38,15 +48,15 @@ export const getById = async (req, res) => {
 export const create = async (req, res) => {
     try {
         const body = req.body
-        const { error } = categorySchema.validate(body)
+        const { error } = productSchema.validate(body)
         if (error) {
             res.status(400).send({
                 message: error.message
             })
         } else {
-            const data = await Category.create(body)
+            const data = await Product.create(body)
             res.send({
-                message: "Create category successfully",
+                message: "Create product successfully",
                 data: data
             })
         }
@@ -62,21 +72,21 @@ export const update = async (req, res) => {
     try {
         const id = req.params.id
         const body = req.body
-        const { error } = categorySchema.validate(body)
+        const { error } = productSchema.validate(body)
         if (error) {
             res.status(400).send({
                 message: error.message
             })
         } else {
-            const data = await Category.findByIdAndUpdate(id, body)
+            const data = await Product.findByIdAndUpdate(id, body)
             if (data) {
                 res.send({
-                    message: "Update category successfully",
+                    message: "Update product successfully",
                     data: data
                 })
             } else {
                 res.status(400).send({
-                    message: "Category is not existed",
+                    message: "Product is not existed",
                     data: data
                 })
             }
@@ -93,14 +103,14 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const id = req.params.id
-        const data = await Category.findByIdAndRemove(id)
+        const data = await Product.findByIdAndRemove(id)
         if (data) {
             res.send({
-                message: "Detele category successfully"
+                message: "Detele product successfully"
             })
         } else {
             res.status(400).send({
-                message: "Category is not existed"
+                message: "Product is not existed"
             })
         }
     } catch (error) {
