@@ -25,8 +25,8 @@ const Product = new Schema({
         require: true
     },
     category_id: {
-        type: String,
-        require: true
+        type: mongoose.Types.ObjectId,
+        ref: "Category",
     },
     brand: {
         type: String,
@@ -37,6 +37,8 @@ const Product = new Schema({
         require: true
     },
     status: String
-})
+},
+    { timestamps: true, versionKey: false }
+)
 
 export default mongoose.model("Product", Product)

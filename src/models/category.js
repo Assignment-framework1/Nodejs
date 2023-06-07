@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
-const Category = new mongoose.Schema({
-    name: String,
-    description: String
-});
+const Category = new mongoose.Schema(
+    {
+        name: String,
+        description: String,
+        products: [{ type: mongoose.Types.ObjectId, ref: "Product" }],
+    },
+    { timestamps: true, versionKey: false }
+);
 
 export default mongoose.model("Category", Category);
