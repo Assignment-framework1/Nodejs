@@ -119,3 +119,23 @@ export const remove = async (req, res) => {
         })
     }
 }
+export const getPro_Name = async function (req, res) {
+    try {
+        const keyword = req.body.name; // Lấy từ khóa tìm kiếm từ request body
+        console.log(keyword);
+
+        // Tìm sản phẩm với tên gần giống từ khóa tìm kiếm
+        const data = await Product.find({ name: { $regex: keyword, $options: 'i' } });
+
+        if (data.length === 0) {
+            // Không tìm thấy sản phẩm
+            return res.status(400).json({ message: "Không có sản phẩm nào" });
+        }
+
+        // Trả về danh sách sản phẩm
+        return res.json(data);
+    } catch (error) {
+        // Xử lý lỗi
+        return res.status(500).json({ message: error.message });
+    }
+};
