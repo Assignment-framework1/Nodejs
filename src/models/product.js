@@ -36,7 +36,7 @@ const Product = new Schema({
         type: Number,
         require: true
     },
-    status: String
+    status: Boolean
 },
     { timestamps: true, versionKey: false }
 )

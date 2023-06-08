@@ -13,7 +13,7 @@ const productSchema = Joi.object({
     category_id: Joi.string().required(),
     brand: Joi.string().required(),
     quantity: Joi.number().required(),
-    status: Joi.string()
+    status: Joi.boolean()
 })
 
 export const getAll = async (req, res) => {
