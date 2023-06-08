@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose
 
+const Size = new Schema({
+    _id: String,
+    name: {
+        type: String,
+        require: true
+    },
+    description: String,
+    __v: Number,
+})
 
 const Product = new Schema({
     name: {
@@ -21,7 +30,7 @@ const Product = new Schema({
         require: true
     },
     size: {
-        type: [String],
+        type: [Size],
         require: true
     },
     category_id: {

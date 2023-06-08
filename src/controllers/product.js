@@ -1,7 +1,12 @@
 import Product from "../models/product";
 import Joi from "joi";
 
-const size_id = Joi.string().required()
+const Size = Joi.object({
+    _id: Joi.string(),
+    name: Joi.string().required(),
+    description: Joi.string(),
+    __v: Joi.number()
+})
 
 const productSchema = Joi.object({
     name: Joi.string().required(),
@@ -9,7 +14,7 @@ const productSchema = Joi.object({
     origin_price: Joi.number(),
     image: Joi.string().required(),
     description: Joi.string().required(),
-    size: Joi.array().items(size_id),
+    size: Joi.array().items(Size),
     category_id: Joi.string().required(),
     brand: Joi.string().required(),
     quantity: Joi.number().required(),

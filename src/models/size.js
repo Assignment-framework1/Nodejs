@@ -7,6 +7,8 @@ const Size = new Schema({
         require: true
     },
     description: String
-})
+},
+    { versionKey: false }
+)
 
 export default mongoose.model("Size", Size)
