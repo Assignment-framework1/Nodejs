@@ -20,8 +20,12 @@ const Users = new Schema({
         type: String,
         required: true
     },
-    confirmPassword:{
+    confirmPassword: {
         type: String
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true
     }
 })
 

@@ -24,6 +24,9 @@ export const signupSchema = joi.object({
         "any.required": "Trường xác nhận mật khẩu là bắt buộc",
         "any.only": 'Trường "xác nhận mật khẩu" không khớp',
     }),
+    isAdmin: joi.boolean().required().messages({
+        "any.required": 'Trường "isAdmin" là bắt buộc',
+    }),
 });
 
 export const signinSchema = joi.object({
